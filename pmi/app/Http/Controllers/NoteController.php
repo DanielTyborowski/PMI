@@ -26,7 +26,12 @@ class NoteController extends Controller
      */
     public function create()
     {
-        //
+        $notes = Note::all();
+        return view('pages.note', [
+            'notes' => $notes,
+            'editingId' => null,
+            'newNote' => true,
+        ]);
     }
 
     /**
@@ -34,7 +39,13 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title'       => ['required', 'min:2', 'max:120'],
+            'description' => ['required', 'min:5'],
+        ]);
+
+        Note::create($validated);
+        return redirect()->route('resource.index');
     }
 
     /**

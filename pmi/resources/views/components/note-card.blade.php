@@ -1,12 +1,29 @@
 
 
-@props(['note', 'editing' => false])
+@props(['note', 'editing' => false, 'new' => false])
 
 
 <div class="w3-third w3-container w3-margin-bottom">
     <div class="w3-container w3-white">
 
-        @if ($editing)
+        @if($new)
+            {{-- NEUE KARTE --}}
+            <form action="{{ route('resource.store') }}" method="POST">
+                @csrf
+                <input type="text" name="title" placeholder="Titel..." class="w3-input">
+                <textarea name="description" placeholder="Beschreibung..." class="w3-input"></textarea>
+                <div class="bottom-Card">
+                    <div class="bottom-card-left">
+                        {{-- <p>-</p> --}}
+                        {{-- <p>-</p> --}}
+                    </div>
+                    <div class="bottom-card-right">
+                        <button type="submit">save</button>
+                        <a href="{{ route('resource.index') }}">cancel</a>
+                    </div>
+                </div>
+            </form>
+        @elseif ($editing)
             <form action="{{ route('resource.update', $note->id)}}" method="POST">
                 @csrf
                 @method('PUT')

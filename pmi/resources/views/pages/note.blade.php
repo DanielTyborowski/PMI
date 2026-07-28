@@ -28,6 +28,16 @@
                     :note="$note"
                     :editing="$editingId !== null && $editingId === $note->id" />
             @endforeach
-            <button>add</button>
+
+            {{-- Neue leere Karte --}}
+            @if(isset($newNote) && $newNote)
+                <x-note-card :new="true" />
+            @endif
+
+            <div class="w3-third w3-container w3-margin-bottom">
+                <a href="{{ route('resource.create') }}">
+                <button>add</button>
+                </a>
+            </div>
     </div>
 @endsection

@@ -12,14 +12,16 @@ class NoteCard extends Component
 
     public Note $note;
     public bool $editing;
+    public bool $new;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(Note $note, $editing = false)
+    public function __construct(Note $note, $editing = false, $new = false)
     {
         $this->note = $note;
         $this->editing = $editing;
+        $this->new = $new;
     }
 
     /**
