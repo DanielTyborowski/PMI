@@ -10,14 +10,34 @@ class NoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notes = Note::all();
+
+        //$notes = Note::all();
+        /*
+        $notes = Note::when($request->filter, function($query) use ($request){
+            $query->where('status', $request->filter);
+            })
+            ->orderBy($request->sort, $request->order)
+            ->get();
+*/
+        $notes = Note::when($request->filter, function($query) use ($request) {
+                    $query->where('status', $request->filter);
+                })
+                ->orderBy($request->get('sort', 'id'), $request->get('order', 'desc'))
+                ->get();
+
+
+        //dd($request->filter, $request->sort, $request->order, $notes);
+
 
         //dd($notes);
         return view('pages.note', [
             'notes' => $notes,
             'editingId' => null,
+            'filter' => $request->filter,
+            'sortBy' => $request->sort,
+            'sortOrder' => $request->order,
         ]);
     }
 
@@ -31,6 +51,9 @@ class NoteController extends Controller
             'notes' => $notes,
             'editingId' => null,
             'newNote' => true,
+            'filter'    => null,
+            'sortBy'    => 'id',
+            'sortOrder' => 'desc',
         ]);
     }
 
@@ -40,8 +63,8 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title'       => ['required', 'min:2', 'max:60'],
-            'description' => ['required', 'min:5'],
+            'title'       => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
         ]);
 
         Note::create($validated);
@@ -66,7 +89,10 @@ class NoteController extends Controller
 
         return view('pages.note', [
             'notes' => $notes,
-            'editingId' => $note->id
+            'editingId' => $note->id,
+            'filter'    => null,
+            'sortBy'    => 'id',
+            'sortOrder' => 'desc',
         ]);
     }
 
@@ -78,8 +104,8 @@ class NoteController extends Controller
 
     //dd($request);
         $validated = $request->validate([
-            'title' => ['required', 'min:2', 'max:60'],
-            'description' => ['required', 'min:5'],
+            'title' => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
             'status' => ['sometimes','in:todo,done'],
         ]);
 

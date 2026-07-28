@@ -10,8 +10,8 @@
             {{-- NEUE KARTE --}}
             <form action="{{ route('resource.store') }}" method="POST">
                 @csrf
-                <input type="text" name="title" placeholder="Titel..." class="w3-input">
-                <textarea name="description" placeholder="Beschreibung..." class="w3-input"></textarea>
+                <input type="text" name="title" placeholder="Titel..." class="w3-input w3-pale-yellow">
+                <textarea name="description" placeholder="Beschreibung..." class="w3-input w3-pale-yellow" rows="10"   ></textarea>
                 <div class="bottom-Card">
                     <div class="bottom-card-left">
                         {{-- <p>-</p> --}}

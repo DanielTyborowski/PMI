@@ -26,9 +26,7 @@
     <!-- Sidebar/menu -->
     <x-sidebar />
 
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
-        title="close side menu" id="myOverlay"></div>
+
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
@@ -37,13 +35,16 @@
         <header id="portfolio">
 
 
-            @yield('note-header')
+            @yield('note-header-new')
             @yield('recipe-header')
 
         </header>
 
         <!-- Note Grid-->
+        @yield('home')
         @yield('note-grid')
+
+        @yield('meals')
 
 
 
