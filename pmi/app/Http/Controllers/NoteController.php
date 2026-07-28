@@ -40,7 +40,7 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title'       => ['required', 'min:2', 'max:120'],
+            'title'       => ['required', 'min:2', 'max:60'],
             'description' => ['required', 'min:5'],
         ]);
 
@@ -76,9 +76,11 @@ class NoteController extends Controller
     public function update(Request $request, Note $note)
     {
 
+    //dd($request);
         $validated = $request->validate([
-            'title'       => ['required', 'min:2', 'max:120'],
+            'title' => ['required', 'min:2', 'max:60'],
             'description' => ['required', 'min:5'],
+            'status' => ['sometimes','in:todo,done'],
         ]);
 
         $note->update($validated);
