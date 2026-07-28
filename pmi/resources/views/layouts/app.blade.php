@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>W3.CSS Template</title>
+    <title>PMI</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
@@ -53,39 +53,16 @@
 
         <!-- Header -->
         <header id="portfolio">
-            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
-                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
-                    class="fa fa-bars"></i></span>
-            <div class="w3-container">
-                <h1><b>Stick it</b></h1>
-                <div class="w3-section w3-bottombar w3-padding-16">
-                    <span class="w3-margin-right">Filter:</span>
-                    <button class="w3-button w3-black">ALL</button>
-                    <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Todo</button>
-                    <button class="w3-button w3-white w3-hide-small"><i
-                            class="fa fa-photo w3-margin-right"></i>Pending</button>
-                    <button class="w3-button w3-white w3-hide-small"><i
-                            class="fa fa-map-pin w3-margin-right"></i>Done</button>
-                    <button>reihenfolge</button>
-                </div>
 
-            </div>
+
+            @yield('note-header')
+            @yield('recipe-header')
+
         </header>
 
         <!-- Note Grid-->
-        <div class="w3-row-padding">
+        @yield('note-grid')
 
-            @for ($i = 0 ; $i<4; $i++)
-
-            @component('components.noteCards')
-
-            @endcomponent
-            @endfor
-
-            <button>add</button>
-
-        </div>
 
 
 

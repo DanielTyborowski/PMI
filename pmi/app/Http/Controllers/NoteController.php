@@ -12,8 +12,13 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $notes = Note::all(['title', 'description']);
+        $notes = Note::all();
 
+        //dd($notes);
+        return view('pages.note', [
+            'notes' => $notes,
+            'editingId' => null,
+        ]);
     }
 
     /**
@@ -43,24 +48,39 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Note $note)
     {
-        //
+        //dd($note->id);
+        $notes = Note::all();
+
+        return view('pages.note', [
+            'notes' => $notes,
+            'editingId' => $note->id
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Note $note)
     {
-        //
+
+        $validated = $request->validate([
+            'title'       => ['required', 'min:2', 'max:120'],
+            'description' => ['required', 'min:5'],
+        ]);
+
+        $note->update($validated);
+        return redirect()->route('resource.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Note $note)
     {
-        //
+        $note->delete();
+
+        return redirect()->route('resource.index');
     }
 }
