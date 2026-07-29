@@ -14,9 +14,9 @@
                 class="fa fa-th-large fa-fw w3-margin-right"></i>Home</a>
         <a href="{{ route('resource.index') }}" onclick="w3_close()"
             class="w3-bar-item w3-button w3-padding w3-text-teal"><i
-                class="fa fa-th-large fa-fw w3-margin-right"></i>Notizen</a>
+                class="fa fa-th-large fa-fw w3-margin-right"></i>Things To Do</a>
         <a href="{{route('meals.index')}}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-user fa-fw w3-margin-right"></i>Meal</a>
+                    class="fa fa-user fa-fw w3-margin-right"></i>What can I eat</a>
 
     </div>
 

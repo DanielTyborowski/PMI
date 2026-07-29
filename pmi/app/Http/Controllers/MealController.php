@@ -11,7 +11,7 @@ class MealController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'search' => ['nullable', 'string', 'min:2', 'max:50'],
+            'search' => ['nullable', 'string', 'min:2', 'max:50', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
         ]);
 
 

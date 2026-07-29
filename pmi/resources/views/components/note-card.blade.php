@@ -13,6 +13,15 @@
                 <input type="text" name="title" placeholder="Titel..." class="w3-input w3-pale-yellow">
                 <textarea name="description" placeholder="Beschreibung..." class="w3-input w3-pale-yellow" rows="10"   ></textarea>
                 <div class="bottom-Card">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="bottom-card-left">
                         {{-- <p>-</p> --}}
                         {{-- <p>-</p> --}}
@@ -24,12 +33,22 @@
                 </div>
             </form>
         @elseif ($editing)
+            {{-- Editier Modus --}}
             <form action="{{ route('resource.update', $note->id)}}" method="POST">
                 @csrf
                 @method('PUT')
                 <input type="text" name="title" id="title" value="{{$note->title}}" class="w3-input">
                 <textarea name="description" id="description">{{$note->description}}</textarea>
                 <div class="bottom-Card">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="bottom-card-left">
                         <p>{{$note->created_at}}</p>
                         <p>{{$note->updated_at}}</p>
