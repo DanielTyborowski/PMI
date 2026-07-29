@@ -20,40 +20,48 @@
 @section('note-header-new')
 
 
-    <div class="w3-container">
-        <h1><b>Stick it</b></h1>
-        <div class="w3-section w3-bottombar w3-padding-16">
-            <span class="w3-margin-right">Filter:</span>
-            <a href="{{ route('resource.index') }}">
-                <button class="w3-button w3 {{ $filter === null ? 'w3-black' : 'w3-white' }}">
-                    ALL
-                </button>
+    <div class="page-container">
+        <h1 class="page-title"><b>Stick it</b></h1>
+        <div class="filter-controls">
+            <span class="filter-label">Filter:</span>
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['filter' => null])) }}"
+            class="filter-button {{ $filter === null ? 'filter-active' : '' }}">
+                ALL
             </a>
-            <a href="{{ route('resource.index', ['filter' => 'todo']) }}">
-                <button class="w3-button  {{ $filter === 'todo' ? 'w3-black' : 'w3-white' }}">
-                    Todo
-                </button>
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['filter' => 'todo'])) }}"
+            class="filter-button {{ $filter === 'todo' ? 'filter-active' : '' }}">
+                Todo
             </a>
-
-            <a href="{{ route('resource.index', ['filter' => 'done']) }}">
-                <button class="w3-button {{ $filter === 'done' ? 'w3-black' : 'w3-white' }}">
-                    Done
-                </button>
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['filter' => 'done'])) }}"
+            class="filter-button {{ $filter === 'done' ? 'filter-active' : '' }}">
+                Done
             </a>
-
         </div>
-        <div class="w3-section w3-bottombar w3-padding-16">
-            <span>Reihenfolge:</span>
-            <a href="{{ route('resource.index', ['filter' => $filter, 'sort' => 'id', 'order' => 'desc']) }}">
-                <button class="w3-button {{ $sortOrder === 'desc' ? 'w3-black' : 'w3-white' }}">
-                    Neueste
-                </button>
+        <div class="sort-controls">
+            <span class="filter-label">Sort:</span>
+
+            @php
+                $nextOrderId = ($sortBy === 'id' && $sortOrder === 'desc') ? 'asc' : 'desc';
+                $nextOrderCreated = ($sortBy === 'created_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
+                $nextOrderUpdated = ($sortBy === 'updated_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
+            @endphp
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['sort' => 'id', 'order' => $nextOrderId])) }}"
+            class="{{ $sortBy === 'id' ? 'sort-active' : '' }}">
+                Nach ID {{ $sortBy === 'id' ? ($sortOrder === 'desc' ? '↓' : '↑') : '' }}
             </a>
 
-            <a href="{{ route('resource.index', ['filter' => $filter, 'sort' => 'id', 'order' => 'asc']) }}">
-                <button class="w3-button {{ $sortOrder === 'asc' ? 'w3-black' : 'w3-white' }}">
-                    Älteste
-                </button>
+            @php
+                $nextOrder = ($sortBy === 'created_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
+            @endphp
+
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['sort' => 'created_at', 'order' => $nextOrderCreated])) }}"
+            class="{{ $sortBy === 'created_at' ? 'sort-active' : '' }}">
+                Nach Erstellungsdatum {{ $sortBy === 'created_at' ? ($sortOrder === 'desc' ? '↓' : '↑') : '' }}
+            </a>
+
+            <a href="{{ route('resource.index', array_merge(request()->query(), ['sort' => 'updated_at', 'order' => $nextOrderUpdated])) }}"
+            class="{{ $sortBy === 'updated_at' ? 'sort-active' : '' }}">
+                Nach Bearbeitungsdatum {{ $sortBy === 'updated_at' ? ($sortOrder === 'desc' ? '↓' : '↑') : '' }}
             </a>
         </div>
     </div>
@@ -82,7 +90,7 @@
         @endif
         <div class="note-card-add-container">
             <a href="{{ route('resource.create') }}">
-                <button class="note-card-add-button">➕</button>
+                <button class="note-card-add-button"><i class="fa fa-plus w3-xxlarge w3-text-grey"></i></button>
             </a>
         </div>
 

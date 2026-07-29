@@ -8,42 +8,17 @@ use Illuminate\Http\Request;
 class NoteController extends Controller
 {
 
-    // sorgen dass auch wirklich nur nach den gewünschten spalten gefiltert werden kann
-    private const SORTABLE_FIELDS = ['id', 'created_at', 'updated_at'];
-
-    // ai hilfe
-    private function getNotes(?string $filter = null, string $sortBy = 'id', string $sortOrder = 'desc')
-    {
-        if (!in_array($filter, ['todo', 'done'])) {
-        $filter = null;
-        }
-
-        if (!in_array($sortBy, self::SORTABLE_FIELDS)) {
-            $sortBy = 'id';
-        }
-
-        if (!in_array($sortOrder, ['asc', 'desc'])) {
-            $sortOrder = 'desc';
-        }
-
-        return Note::when($filter, function ($query) use ($filter) {
-                $query->where('status', $filter);
-            })
-            ->orderBy($sortBy, $sortOrder)
-            ->get();
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-
         $sortBy = $request->get('sort', 'id');
         $sortOrder = $request->get('order', 'desc');
 
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
+
         return view('pages.note', [
-            'notes' => $this->getNotes($request->filter, $sortBy, $sortOrder),
+            'notes' => $notes,
             'editingId' => null,
             'filter' => $request->filter,
             'sortBy' => $sortBy,
@@ -58,7 +33,7 @@ class NoteController extends Controller
     {
         $notes = Note::all();
         return view('pages.note', [
-            'notes' => $this->getNotes(),
+            'notes' => $notes,
             'editingId' => null,
             'newNote' => true,
             'filter'    => null,
@@ -98,7 +73,7 @@ class NoteController extends Controller
         $notes = Note::all();
 
         return view('pages.note', [
-            'notes' => $this->getNotes(),
+            'notes' => $notes,
             'editingId' => $note->id,
             'filter'    => null,
             'sortBy'    => 'id',

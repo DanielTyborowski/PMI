@@ -8,30 +8,6 @@ use Illuminate\Http\Request;
 class NoteController extends Controller
 {
 
-    // sorgen dass auch wirklich nur nach den gewünschten spalten gefiltert werden kann
-    private const SORTABLE_FIELDS = ['id', 'created_at', 'updated_at'];
-
-    // ai hilfe
-    private function getNotes(?string $filter = null, string $sortBy = 'id', string $sortOrder = 'desc')
-    {
-        if (!in_array($filter, ['todo', 'done'])) {
-        $filter = null;
-        }
-
-        if (!in_array($sortBy, self::SORTABLE_FIELDS)) {
-            $sortBy = 'id';
-        }
-
-        if (!in_array($sortOrder, ['asc', 'desc'])) {
-            $sortOrder = 'desc';
-        }
-
-        return Note::when($filter, function ($query) use ($filter) {
-                $query->where('status', $filter);
-            })
-            ->orderBy($sortBy, $sortOrder)
-            ->get();
-    }
 
     /**
      * Display a listing of the resource.
@@ -39,15 +15,31 @@ class NoteController extends Controller
     public function index(Request $request)
     {
 
-        $sortBy = $request->get('sort', 'id');
-        $sortOrder = $request->get('order', 'desc');
+        //$notes = Note::all();
+        /*
+        $notes = Note::when($request->filter, function($query) use ($request){
+            $query->where('status', $request->filter);
+            })
+            ->orderBy($request->sort, $request->order)
+            ->get();
+*/
+        $notes = Note::when($request->filter, function($query) use ($request) {
+                    $query->where('status', $request->filter);
+                })
+                ->orderBy($request->get('sort', 'id'), $request->get('order', 'desc'))
+                ->get();
 
+
+        //dd($request->filter, $request->sort, $request->order, $notes);
+
+
+        //dd($notes);
         return view('pages.note', [
-            'notes' => $this->getNotes($request->filter, $sortBy, $sortOrder),
+            'notes' => $notes,
             'editingId' => null,
             'filter' => $request->filter,
-            'sortBy' => $sortBy,
-            'sortOrder' => $sortOrder,
+            'sortBy' => $request->sort,
+            'sortOrder' => $request->order,
         ]);
     }
 
@@ -58,7 +50,7 @@ class NoteController extends Controller
     {
         $notes = Note::all();
         return view('pages.note', [
-            'notes' => $this->getNotes(),
+            'notes' => $notes,
             'editingId' => null,
             'newNote' => true,
             'filter'    => null,
@@ -98,7 +90,7 @@ class NoteController extends Controller
         $notes = Note::all();
 
         return view('pages.note', [
-            'notes' => $this->getNotes(),
+            'notes' => $notes,
             'editingId' => $note->id,
             'filter'    => null,
             'sortBy'    => 'id',

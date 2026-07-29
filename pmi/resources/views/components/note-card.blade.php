@@ -10,10 +10,9 @@
             {{-- NEUE KARTE --}}
             <form action="{{ route('resource.store') }}" method="POST">
                 @csrf
-                <input type="text" name="title" placeholder="Titel..." class="w3-input w3-pale-yellow">
-                <textarea name="description" placeholder="Beschreibung..." class="w3-input w3-pale-yellow" rows="10"></textarea>
-                <div class="note-card-bottom">
-                    @if ($errors->any())
+                <input type="text" name="title" placeholder="Titel..." class="note-card-edit-title">
+                <textarea name="description" placeholder="Beschreibung..." class="note-card-edit-description" rows="10"></textarea>
+                @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -22,13 +21,13 @@
                         </ul>
                     </div>
                     @endif
+                <div class="note-card-bottom">
+
                     <div class="note-card-bottom-left">
-                        {{-- <p>-</p> --}}
-                        {{-- <p>-</p> --}}
+                        <button type="submit" class="note-card-edit-save-button">🔒save</button>
                     </div>
                     <div class="note-card-bottom-right">
-                        <button type="submit">save</button>
-                        <a href="{{ route('resource.index') }}">cancel</a>
+                        <a class="note-card-edit-save-button" href="{{ route('resource.index') }}">❌cancel</a>
                     </div>
                 </div>
             </form>
@@ -37,10 +36,9 @@
             <form action="{{ route('resource.update', $note->id)}}" method="POST">
                 @csrf
                 @method('PUT')
-                <input type="text" name="title" id="title" value="{{$note->title}}" class="w3-input">
-                <textarea name="description" id="description">{{$note->description}}</textarea>
-                <div class="note-card-bottom">
-                    @if ($errors->any())
+                <input type="text" name="title" id="title" value="{{$note->title}}" class="note-card-edit-title">
+                <textarea name="description" id="description" class="note-card-edit-description">{{$note->description}} </textarea>
+                @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -49,12 +47,13 @@
                         </ul>
                     </div>
                     @endif
+                <div class="note-card-bottom">
+
                     <div class="note-card-bottom-left">
-                        <p>🗓️{{$note->created_at}}</p>
-                        <p>✏️{{$note->updated_at}}</p>
+                        <button type="submit" class="note-card-edit-save-button">🔒save</button>
                     </div>
                     <div class="note-card-bottom-right">
-                        <button type="submit">save</button>
+                        <a class="note-card-edit-save-button" href="{{ route('resource.index') }}">❌cancel</a>
                     </div>
                 </div>
             </form>
@@ -82,7 +81,7 @@
 
 
             <div class="note-card-description">
-                <p>{{$note->description}}</p>
+                <p>{!! nl2br(e($note->description)) !!}</p>
 
             </div>
 
