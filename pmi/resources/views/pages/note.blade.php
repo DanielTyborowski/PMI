@@ -25,12 +25,12 @@
         <div class="w3-section w3-bottombar w3-padding-16">
             <span class="w3-margin-right">Filter:</span>
             <a href="{{ route('resource.index') }}">
-                <button class="w3-button {{ $filter === null ? 'w3-black' : 'w3-white' }}">
+                <button class="w3-button w3 {{ $filter === null ? 'w3-black' : 'w3-white' }}">
                     ALL
                 </button>
             </a>
             <a href="{{ route('resource.index', ['filter' => 'todo']) }}">
-                <button class="w3-button {{ $filter === 'todo' ? 'w3-black' : 'w3-white' }}">
+                <button class="w3-button  {{ $filter === 'todo' ? 'w3-black' : 'w3-white' }}">
                     Todo
                 </button>
             </a>
@@ -61,7 +61,7 @@
 @endsection
 
 @section('note-grid')
-    <div class="w3-row-padding">
+    <div class="note-content-container ">
 
 
 
@@ -80,11 +80,12 @@
         @if (isset($newNote) && $newNote)
             <x-note-card :new="true" />
         @endif
-
-        <div class="w3-third w3-container w3-margin-bottom">
+        <div class="note-card-add-container">
             <a href="{{ route('resource.create') }}">
-                <button>add</button>
+                <button class="note-card-add-button">➕</button>
             </a>
         </div>
+
+
     </div>
 @endsection

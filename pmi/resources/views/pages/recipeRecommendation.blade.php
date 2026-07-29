@@ -45,7 +45,12 @@
                     <p><strong>Kategorie:</strong> {{ $meal['strCategory'] ?? 'No category available' }}</p>
                     <p><strong>Tags:</strong> {{ $meal['strTags'] ?? 'No tags available' }}</p>
                     <p><strong>Herkunft:</strong> {{ $meal['strArea'] ?? 'No origin available' }}</p>
-                    <a href="{{ $meal['strYoutube'] ?? '#' }}" target="_blank">Link</a>
+                    @if (str_contains($meal['strYoutube'] ?? '', 'youtube'))
+                        <p><strong>Youtube:</strong> <a href="{{ $meal['strYoutube'] }}" target="_blank">▶️ Video ansehen</a></p>
+                    @else
+                        <p><strong>Google:</strong> <a href="{{ $meal['strYoutube'] ?? '#' }}" target="_blank">🔍 Auf Google suchen</a></p>
+                    @endif
+
 
                 </div>
             </div>

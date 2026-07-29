@@ -8,7 +8,7 @@
 
 @section('home')
     <div class="w3-container w3-padding-32">
-        <h2>Meine Apps</h2>
+        <h2><b>Meine Apps</b></h2>
         <div class="w3-row-padding w3-margin-top">
 
             {{-- Notes --}}
