@@ -24,7 +24,7 @@
 
             {{-- Recipes --}}
             <div class="w3-third w3-margin-bottom">
-                {{-- <a href="{{ route('recipes.index') }}" class="w3-text-black"> --}}
+                <a href="{{ route('meals.index') }}" class="w3-text-black">
                     <div class="w3-card w3-hover-shadow w3-padding-32 w3-center">
                         <i class="fa fa-cutlery w3-xxlarge w3-text-green"></i>
                         <h3>Rezepte</h3>
