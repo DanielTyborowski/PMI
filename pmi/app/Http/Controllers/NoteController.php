@@ -24,13 +24,10 @@ class NoteController extends Controller
             'sortOrder' => $sortOrder,
 
         ];
-
     }
 
     public function index(Request $request)
     {
-
-
         return view('pages.note', array_merge(
             $this->getFilteredNotes($request),
             ['editingId' => null]

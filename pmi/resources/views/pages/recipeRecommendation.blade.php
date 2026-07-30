@@ -22,8 +22,6 @@
 
         </div>
     </div>
-
-
 @endsection
 
 @section('meals')
@@ -40,16 +38,14 @@
                     </div>
                 </div>
                 <div class="meal-card-top-right">
-                    <p><strong>Kategorie:</strong> {{ $meal['strCategory'] ?? 'No category available' }}</p>
+                    <p><strong>Category:</strong> {{ $meal['strCategory'] ?? 'No category available' }}</p>
                     <p><strong>Tags:</strong> {{ $meal['strTags'] ?? 'No tags available' }}</p>
-                    <p><strong>Herkunft:</strong> {{ $meal['strArea'] ?? 'No origin available' }}</p>
+                    <p><strong>Origin:</strong> {{ $meal['strArea'] ?? 'No origin available' }}</p>
                     @if (str_contains($meal['strYoutube'] ?? '', 'youtube'))
-                        <p><strong>Youtube:</strong> <a href="{{ $meal['strYoutube'] }}" target="_blank">▶️ Video ansehen</a></p>
+                        <p><strong>Youtube:</strong> <a href="{{ $meal['strYoutube'] }}" target="_blank">▶️ Video tutorial</a></p>
                     @else
-                        <p><strong>Google:</strong> <a href="{{ $meal['strYoutube'] ?? '#' }}" target="_blank">🔍 Auf Google suchen</a></p>
+                        <p><strong>Google:</strong> <a href="{{ $meal['strYoutube'] ?? '#' }}" target="_blank">🔍 Google search</a></p>
                     @endif
-
-
                 </div>
             </div>
             {{-- Card Bottom --}}
@@ -64,18 +60,15 @@
         @if ($hasSearched)
             <div class="meal-card">
                 <div class="meal-card-bottom" >
-                    <p>Es wurde kein Rezept gefunden, bitte gib etwas anderes ein.</p>
+                    <p>No recipe was found. Please enter something else.</p>
                 </div>
-
             </div>
-
         @else
             <div class="meal-card">
                 <div class="meal-card-bottom" >
-                    <p>Bitte gib etwas in die Suche ein</p>
+                    <p>Please enter something in the search box</p>
                 </div>
             </div>
-
         @endif
     @endforelse
 

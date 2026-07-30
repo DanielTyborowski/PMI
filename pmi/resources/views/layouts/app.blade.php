@@ -29,51 +29,30 @@
     <x-sidebar />
 
 
-
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
 
         <!-- Header -->
         <header id="portfolio">
-
-
             @yield('note-header-new')
             @yield('recipe-header')
-
         </header>
 
-        <!-- Note Grid-->
+        <!-- Content -->
+
+        {{-- home view --}}
         @yield('home')
+
+        {{-- note view --}}
         @yield('note-grid')
 
+        {{-- meal view  --}}
         @yield('meals')
-
-
-
-
-
-
-
-        <!-- Footer -->
-        {{-- <x-footer /> --}}
-
-
 
         <!-- End page content -->
     </div>
 
-    <script>
-        // Script to open and close sidebar
-        function w3_open() {
-            document.getElementById("mySidebar").style.display = "block";
-            document.getElementById("myOverlay").style.display = "block";
-        }
 
-        function w3_close() {
-            document.getElementById("mySidebar").style.display = "none";
-            document.getElementById("myOverlay").style.display = "none";
-        }
-    </script>
 
 </body>
 

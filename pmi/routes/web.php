@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::resource('/note/resource', NoteController::class)->parameters(['resource' => 'note']);
 
-
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
 Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
 
