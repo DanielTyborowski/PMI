@@ -6,6 +6,23 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+/**
+ * -----------------------------------------------------------------------------
+ * SortButton Component
+ * -----------------------------------------------------------------------------
+ *
+ * Represents a reusable sorting button component.
+ *
+ * This component generates a button that allows users to sort data by a
+ * specific column. It automatically determines the next sorting direction
+ * based on the currently active sorting state.
+ *
+ * Example:
+ *
+ * - Current sorting: created_at DESC
+ * - Click action: changes to created_at ASC
+ */
+
 class SortButton extends Component
 {
     public string $nextOrder;

@@ -7,7 +7,28 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the database migrations.
+     *
+     * Creates the "notes" table with the required columns.
+     *
+     * Table structure:
+     *
+     * - id:
+     *   Auto-incrementing primary key
+     *
+     * - title:
+     *   Short text field containing the note title
+     *
+     * - description:
+     *   Long text field containing the note content
+     *
+     * - status:
+     *   Current state of the note (default: todo)
+     *
+     * - timestamps:
+     *   Automatically creates created_at and updated_at columns
+     *
+     * @return void
      */
     public function up(): void
     {
