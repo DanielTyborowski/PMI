@@ -26,8 +26,28 @@ use Illuminate\View\Component;
 class SortButton extends Component
 {
     public string $nextOrder;
-    /**
+
+     /**
      * Create a new component instance.
+     *
+     * Component properties:
+     *
+     * - column:
+     *   Database column used for sorting.
+     *
+     * - label:
+     *   Text displayed inside the button.
+     *
+     * - currentSortBy:
+     *   Currently active sorting column.
+     *
+     * - currentSortOrder:
+     *   Currently active sorting direction.
+     *
+     * @param string $column Column name used for sorting
+     * @param string $label Button display text
+     * @param string $currentSortBy Current active sorting column
+     * @param string $currentSortOrder Current sorting direction (asc/desc)
      */
     public function __construct(
         public string $column,
@@ -36,6 +56,12 @@ class SortButton extends Component
         public string $currentSortOrder,
     )
     {
+        /**
+         * Determine the sorting direction for the next request.
+         *
+         * Clicking an already descending sorted column changes it to ascending.
+         * All other cases default to descending sorting.
+         */
         $this->nextOrder = ($currentSortBy === $column && $currentSortOrder === 'desc') ? 'asc' : 'desc';
 
     }
