@@ -8,54 +8,65 @@ use Illuminate\Http\Request;
 class NoteController extends Controller
 {
 
+    private function getFilteredNotes(Request $request)
+    {
+        $sortBy = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'desc');
 
-    /**
-     * Display a listing of the resource.
-     */
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
+
+        return view('pages.note', [
+            'notes' => $notes,
+            'filter' => $request->filter,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+
+        ]);
+
+    }
+
     public function index(Request $request)
     {
+        $sortBy = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'desc');
 
-        //$notes = Note::all();
-        /*
-        $notes = Note::when($request->filter, function($query) use ($request){
-            $query->where('status', $request->filter);
-            })
-            ->orderBy($request->sort, $request->order)
-            ->get();
-*/
-        $notes = Note::when($request->filter, function($query) use ($request) {
-                    $query->where('status', $request->filter);
-                })
-                ->orderBy($request->get('sort', 'id'), $request->get('order', 'desc'))
-                ->get();
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
 
-
-        //dd($request->filter, $request->sort, $request->order, $notes);
-
-
-        //dd($notes);
         return view('pages.note', [
             'notes' => $notes,
             'editingId' => null,
             'filter' => $request->filter,
-            'sortBy' => $request->sort,
-            'sortOrder' => $request->order,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $notes = Note::all();
+
+
+        $sortBy    = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'desc');
+
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
+
         return view('pages.note', [
             'notes' => $notes,
             'editingId' => null,
             'newNote' => true,
             'filter'    => null,
-            'sortBy'    => 'id',
-            'sortOrder' => 'desc',
+            'sortBy'    => $sortBy,
+            'sortOrder' => $sortOrder,
         ]);
     }
 
@@ -84,17 +95,26 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Note $note)
+    public function edit(Note $note, Request $request)
     {
-        //dd($note->id);
-        $notes = Note::all();
+
+        //$notes = Note::all();
+
+        $sortBy    = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'desc');
+
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
+
 
         return view('pages.note', [
             'notes' => $notes,
             'editingId' => $note->id,
             'filter'    => null,
-            'sortBy'    => 'id',
-            'sortOrder' => 'desc',
+            'sortBy'    => $sortBy,
+            'sortOrder' => $sortOrder,
+
         ]);
     }
 
@@ -105,6 +125,10 @@ class NoteController extends Controller
     {
 
     //dd($request);
+
+        $sortBy    = $request->get('sort', 'id');
+        $sortOrder = $request->get('order', 'desc');
+
         $validated = $request->validate([
             'title' => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
             'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
@@ -112,7 +136,11 @@ class NoteController extends Controller
         ]);
 
         $note->update($validated);
-        return redirect()->route('resource.index');
+        return redirect()->route('resource.index', [
+            'filter'    => null,
+            'sortBy'    => $sortBy,
+            'sortOrder' => $sortOrder,
+        ]);
     }
 
     /**

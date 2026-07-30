@@ -8,63 +8,44 @@ use Illuminate\Http\Request;
 class NoteController extends Controller
 {
 
-    // sorgen dass auch wirklich nur nach den gewünschten spalten gefiltert werden kann
-    private const SORTABLE_FIELDS = ['id', 'created_at', 'updated_at'];
-
-    // ai hilfe
-    private function getNotes(?string $filter = null, string $sortBy = 'id', string $sortOrder = 'desc')
+    private function getFilteredNotes(Request $request)
     {
-        if (!in_array($filter, ['todo', 'done'])) {
-        $filter = null;
-        }
-
-        if (!in_array($sortBy, self::SORTABLE_FIELDS)) {
-            $sortBy = 'id';
-        }
-
-        if (!in_array($sortOrder, ['asc', 'desc'])) {
-            $sortOrder = 'desc';
-        }
-
-        return Note::when($filter, function ($query) use ($filter) {
-                $query->where('status', $filter);
-            })
-            ->orderBy($sortBy, $sortOrder)
-            ->get();
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-
         $sortBy = $request->get('sort', 'id');
         $sortOrder = $request->get('order', 'desc');
 
-        return view('pages.note', [
-            'notes' => $this->getNotes($request->filter, $sortBy, $sortOrder),
-            'editingId' => null,
+        $notes = Note::filterByStatus($request->filter)
+                    ->sortable($sortBy, $sortOrder)
+                    ->get();
+
+        return [
+            'notes' => $notes,
             'filter' => $request->filter,
             'sortBy' => $sortBy,
             'sortOrder' => $sortOrder,
-        ]);
+
+        ];
+
+    }
+
+    public function index(Request $request)
+    {
+
+
+        return view('pages.note', array_merge(
+            $this->getFilteredNotes($request),
+            ['editingId' => null]
+        ));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $notes = Note::all();
-        return view('pages.note', [
-            'notes' => $this->getNotes(),
-            'editingId' => null,
-            'newNote' => true,
-            'filter'    => null,
-            'sortBy'    => 'id',
-            'sortOrder' => 'desc',
-        ]);
+        return view('pages.note', array_merge(
+            $this->getFilteredNotes($request),
+            ['editingId' => null, 'newNote' => true]
+        ));
     }
 
     /**
@@ -92,18 +73,13 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Note $note)
+    public function edit(Note $note, Request $request)
     {
-        //dd($note->id);
-        $notes = Note::all();
 
-        return view('pages.note', [
-            'notes' => $this->getNotes(),
-            'editingId' => $note->id,
-            'filter'    => null,
-            'sortBy'    => 'id',
-            'sortOrder' => 'desc',
-        ]);
+        return view('pages.note', array_merge(
+            $this->getFilteredNotes($request),
+            ['editingId' => $note->id]
+        ));
     }
 
     /**
@@ -112,15 +88,16 @@ class NoteController extends Controller
     public function update(Request $request, Note $note)
     {
 
-    //dd($request);
         $validated = $request->validate([
-            'title' => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'title'       => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
             'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
-            'status' => ['sometimes','in:todo,done'],
+            'status'      => ['sometimes', 'in:todo,done'],
         ]);
 
         $note->update($validated);
-        return redirect()->route('resource.index');
+
+        return redirect()->route('resource.index', request()->only(['sort', 'order', 'filter']));
+
     }
 
     /**

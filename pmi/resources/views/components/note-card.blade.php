@@ -53,7 +53,7 @@
                         <button type="submit" class="note-card-edit-save-button">🔒save</button>
                     </div>
                     <div class="note-card-bottom-right">
-                        <a class="note-card-edit-save-button" href="{{ route('resource.index') }}">❌cancel</a>
+                        <a class="note-card-edit-save-button" href="{{ route('resource.index', request()->query()) }}">❌cancel</a>
                     </div>
                 </div>
             </form>
@@ -91,8 +91,8 @@
                     <p>✏️{{$note->updated_at}}</p>
                 </div>
                 <div class="note-card-bottom-right">
-                    <a href="{{ route('resource.edit', $note->id) }}">
-                        <button class="note-card-edit-button">✒️</button>
+                    <a href="{{ route('resource.edit', array_merge(['note' => $note->id], request()->query())) }}">
+                        <button class="note-card-edit-save-button">✒️</button>
                     </a>
 
                 </div>

@@ -45,14 +45,11 @@
                 $nextOrderCreated = ($sortBy === 'created_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
                 $nextOrderUpdated = ($sortBy === 'updated_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
             @endphp
+
             <a href="{{ route('resource.index', array_merge(request()->query(), ['sort' => 'id', 'order' => $nextOrderId])) }}"
             class="{{ $sortBy === 'id' ? 'sort-active' : '' }}">
                 Nach ID {{ $sortBy === 'id' ? ($sortOrder === 'desc' ? '↓' : '↑') : '' }}
             </a>
-
-            @php
-                $nextOrder = ($sortBy === 'created_at' && $sortOrder === 'desc') ? 'asc' : 'desc';
-            @endphp
 
             <a href="{{ route('resource.index', array_merge(request()->query(), ['sort' => 'created_at', 'order' => $nextOrderCreated])) }}"
             class="{{ $sortBy === 'created_at' ? 'sort-active' : '' }}">
@@ -89,7 +86,7 @@
             <x-note-card :new="true" />
         @endif
         <div class="note-card-add-container">
-            <a href="{{ route('resource.create') }}">
+            <a href="{{ route('resource.create', request()->query() ) }}">
                 <button class="note-card-add-button"><i class="fa fa-plus w3-xxlarge w3-text-grey"></i></button>
             </a>
         </div>

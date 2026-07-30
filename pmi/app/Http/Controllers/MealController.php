@@ -4,72 +4,54 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
 
 class MealController extends Controller
 {
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'search' => ['nullable', 'string', 'min:2', 'max:50', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'search' => [
+                'nullable',
+                'string',
+                'min:2',
+                'max:50',
+                'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'
+            ],
         ]);
 
 
-        $validator = Validator::make($request->all(), [
-        'search' => ['nullable', 'string', 'min:2', 'max:100'],
-    ]);
-        if ($validator->fails()) {
-        return view('pages.recipeRecommendation', [
-            'meals' => [],
-            'hasSearched' => false,
-            'errors' => $validator->errors(),
-        ]);
-    }
-
-        // fängt ab, wenn noch kein input gegeben ist (beim erstmaligen aufrufen)
-        //$mealName = $request->input('search');
-
-        //$mealName = trim($validated['search'] ?? '');
-        $mealName = trim($request->input('search') ?? '');
+        $mealName = trim($validated['search'] ?? '');
         $hasSearched = filled($mealName);
 
-
-        if(!$hasSearched){
+        // check first time opening route => empty meals array
+        if (!$hasSearched) {
             return view('pages.recipeRecommendation', [
                 'meals' => [],
-                'hasSearched' => $hasSearched,
-                ]);
-        }
-/*
-        if(blank($mealName)){
-            return view('pages.recipeRecommendation', ['meals' => []]);
-        }
-*/
+                'hasSearched' => false,
 
+            ]);
+        }
+
+        // api request
         $baseUrl = 'https://www.themealdb.com';
         $apiPath = '/api/json/v1/1/search.php';
-
-        $mealName = $request->input('search');
 
         $response = Http::get("{$baseUrl}{$apiPath}", [
             's' => $mealName,
         ]);
 
 
-
-
         $meals = $response->json()['meals'] ?? [];
 
-
+        // Check if Youtuble Link is available, otherwise will change it to a google search
         foreach ($meals as &$meal) {
-            if(empty($meal['strYoutube'])){
+            if (empty($meal['strYoutube'])) {
                 $searchQue = $meal['strMeal'];
                 $meal['strYoutube'] = "https://www.google.com/search?q={$searchQue}";
             }
         }
 
-
-        return view('pages.recipeREcommendation', [
+        return view('pages.recipeRecommendation', [
             'meals' => $meals,
             'hasSearched' => $hasSearched,
         ]);
