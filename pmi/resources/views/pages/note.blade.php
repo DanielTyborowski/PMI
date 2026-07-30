@@ -2,8 +2,9 @@
 
 
 @section('note-header-new')
+<h1 class="page-title"><b>Things To Do</b></h1>
     <div class="page-container">
-        <h1 class="page-title"><b>Stick it</b></h1>
+
         <div class="filter-controls">
             <span class="filter-label">Filter:</span>
             {{-- nicht value='null' ':' muss mit, da sonst string null --}}
@@ -31,18 +32,17 @@
                     :editing="$editingId !== null && $editingId === $note->id" />
         @endforeach
 
-        {{-- Neue leere Karte --}}
+        {{-- new empty card --}}
         @if (isset($newNote) && $newNote)
             <x-note-card :new="true" />
         @endif
 
         {{-- Button to add a new note --}}
         <div class="note-card-add-container">
-            <a href="{{ route('resource.create', request()->query() ) }}">
+            <a href="{{ route('notes.create', request()->query() ) }}">
                 <button class="note-card-add-button"><i class="fa fa-plus w3-xxlarge w3-text-grey"></i></button>
             </a>
         </div>
-
 
     </div>
 @endsection

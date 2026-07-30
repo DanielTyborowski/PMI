@@ -4,7 +4,7 @@
 
 @section('recipe-header')
     <div class="w3-container">
-        <h1><b>Recipe Recommendation</b></h1>
+        <h1><b>What can I eat?</b></h1>
         <div class="meal-search-container">
             <form action="{{ route('meals.index') }}" method="GET">
                 <input class='meal-search-input' type="text" name="search" placeholder="Search for a meal..." value="{{ request('search') }}">

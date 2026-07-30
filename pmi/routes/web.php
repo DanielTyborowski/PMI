@@ -13,7 +13,9 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::resource('/note/resource', NoteController::class)->parameters(['resource' => 'note']);
+
+
+Route::resource('/notes', NoteController::class)->parameters(['resource' => 'note']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 

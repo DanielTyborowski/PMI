@@ -1,7 +1,7 @@
 @props(['note'])
 
 <div class='note-card-header'>
-<form action="{{route('resource.destroy', $note->id)}}" class="note-card-delete" method="POST">
+<form action="{{route('notes.destroy', $note->id)}}" class="note-card-delete" method="POST">
         @csrf
         @method('DELETE')
         <button class="note-card-delete-button" type="submit">❌</button>
@@ -10,7 +10,7 @@
     <p><b class="note-card-title">{{$note->title}}</b></p>
 </div>
 
-<form action="{{route('resource.update', $note->id)}}" method="POST" class="note-card-checkbox">
+<form action="{{route('notes.update', $note->id)}}" method="POST" class="note-card-checkbox">
     @csrf
     @method('PUT')
     <input type="hidden" name="title" value="{{$note->title}}" >
@@ -32,7 +32,7 @@
     <p>✏️{{$note->updated_at}}</p>
 </div>
 <div class="note-card-bottom-right">
-    <a href="{{ route('resource.edit', array_merge(['note' => $note->id], request()->query())) }}">
+    <a href="{{ route('notes.edit', array_merge(['note' => $note->id], request()->query())) }}">
         <button class="note-card-edit-save-button">✒️</button>
     </a>
 

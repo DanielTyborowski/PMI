@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/fonts.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fonts/fonts.css')}}">
     <link rel="stylesheet" href="{{asset('css/w3.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
 

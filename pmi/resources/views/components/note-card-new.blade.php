@@ -1,7 +1,7 @@
 
 
 
-<form action="{{ route('resource.store') }}" method="POST">
+<form action="{{ route('notes.store') }}" method="POST">
     @csrf
     <input type="text" name="title" placeholder="Titel..." class="note-card-edit-title">
     <textarea name="description" placeholder="Beschreibung..." class="note-card-edit-description" rows="10"></textarea>
@@ -20,7 +20,7 @@
             <button type="submit" class="note-card-edit-save-button">🔒save</button>
         </div>
         <div class="note-card-bottom-right">
-            <a class="note-card-edit-save-button" href="{{ route('resource.index') }}">❌cancel</a>
+            <a class="note-card-edit-save-button" href="{{ route('notes.index') }}">❌cancel</a>
         </div>
     </div>
 </form>

@@ -13,8 +13,8 @@
        class="w3-bar-item w3-button w3-padding {{ request()->routeIs('home.index') ? 'nav-active' : '' }}">
         Home
     </a>
-    <a href="{{ route('resource.index') }}" onclick="w3_close()"
-       class="w3-bar-item w3-button w3-padding {{ request()->routeIs('resource.index') ? 'nav-active' : '' }}">
+    <a href="{{ route('notes.index') }}" onclick="w3_close()"
+       class="w3-bar-item w3-button w3-padding {{ request()->routeIs('notes.index') ? 'nav-active' : '' }}">
         Things To Do
     </a>
     <a href="{{ route('meals.index') }}" onclick="w3_close()"

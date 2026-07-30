@@ -16,9 +16,7 @@ class FilterButton extends Component
         public string $label,
         public ?string $value,
     )
-    {
-
-    }
+    {}
 
     /**
      * Get the view / contents that represent the component.

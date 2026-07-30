@@ -111,20 +111,14 @@
 
 .note-card-header {
     background-color: #fae423;
-
-
     align-items: center;
     justify-content: space-between;
-
     display: flex;
-
-
-
 }
 
 .note-card-title {
     font-family: 'Pinkend',cursive;
-    font-size: 1.2em;
+    font-size: 1.3em;
     margin-left: 10px;
 }
 
@@ -179,13 +173,7 @@
 }
 
 
-
-
-
-
 .note-card-delete {
-
-
     position: absolute;
     top: 0px;
     right:0px;
@@ -199,7 +187,6 @@ background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-
     width: 30px;
     height:30px;
     border-radius: 50%;
@@ -227,15 +214,10 @@ background: none;
     align-items: center;
     justify-content: center;
     background-color: #f3f5f2;
-
-
     width: 80px;
     height: 80px;
     border-radius: 50%;
     cursor: pointer;
-
-
-
 }
 
 
@@ -245,7 +227,6 @@ background: none;
     border: none;
     font-family: 'Pinkend',cursive;
     font-size: 1.2em;
-
     height: 70px;
 }
 
@@ -299,16 +280,27 @@ background: none;
 
 /* filter */
 .filter-controls {
+
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 15px 20px;
     flex-wrap: wrap;
+
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 500px;
+
+
 }
 
 .filter-label {
     font-weight: 600;
-    color: #555;
+    color: #352323;
     margin-right: 5px;
 }
 
@@ -316,7 +308,7 @@ background: none;
     display: inline-block;
     text-decoration: none;
     background-color: #f1f1f1;
-    color: #555;
+    color: #947a7a;
     border-radius: 20px;
     padding: 8px 16px;
     font-size: 0.9em;
@@ -342,8 +334,18 @@ background: none;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 15px 20px;
     flex-wrap: wrap;
+    margin: 15px 20px;
+    width: 500px;
+
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 8px 24px rgba(15, 23, 42, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sort-controls a {
@@ -373,6 +375,10 @@ background: none;
 
 
 
+.page-container{
+    display: flex;
+    flex-direction: row;
+}
 
 
 

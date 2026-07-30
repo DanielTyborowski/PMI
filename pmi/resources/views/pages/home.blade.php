@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 
-
-
-
-
-
 @section('home')
     <div class="w3-container w3-padding-32">
         <h2><b>Meine Apps</b></h2>
@@ -13,7 +8,7 @@
 
             {{-- Notes --}}
             <div class="w3-third w3-margin-bottom">
-                <a href="{{ route('resource.index') }}" class="w3-text-black">
+                <a href="{{ route('notes.index') }}" class="w3-text-black">
                     <div class="w3-card w3-hover-shadow w3-padding-32 w3-center">
                         <i class="fa fa-sticky-note w3-xxlarge w3-text-yellow"></i>
                         <h3>Stick it</h3>

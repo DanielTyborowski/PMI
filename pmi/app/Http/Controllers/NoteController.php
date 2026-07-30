@@ -56,7 +56,7 @@ class NoteController extends Controller
         ]);
 
         Note::create($validated);
-        return redirect()->route('resource.index');
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -93,7 +93,7 @@ class NoteController extends Controller
 
         $note->update($validated);
 
-        return redirect()->route('resource.index', request()->only(['sort', 'order', 'filter']));
+        return redirect()->route('notes.index', request()->only(['sort', 'order', 'filter']));
 
     }
 
