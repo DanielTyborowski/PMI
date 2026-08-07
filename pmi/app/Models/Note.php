@@ -80,7 +80,7 @@ class Note extends Model
             $filter = null;
         }
 
-        return $query->when($filter, fn($q) => $q->where('status', $filter));
+        $query->when($filter, fn($q) => $q->where('status', $filter));
     }
 
     /**
@@ -121,7 +121,7 @@ class Note extends Model
             $sortOrder = 'desc';
         }
 
-        return $query->orderBy($sortBy, $sortOrder);
+        $query->orderBy($sortBy, $sortOrder);
     }
 
 

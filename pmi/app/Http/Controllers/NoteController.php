@@ -127,7 +127,7 @@ class NoteController extends Controller
     {
         $validated = $request->validate([
             'title'       => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
-            'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'description' => ['required', 'min:5', 'max:500', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
         ]);
 
         Note::create($validated);
@@ -175,7 +175,7 @@ class NoteController extends Controller
 
         $validated = $request->validate([
             'title'       => ['required', 'min:2', 'max:60', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
-            'description' => ['required', 'min:5', 'regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
+            'description' => ['required', 'min:5', 'max:500','regex:/^[^<>&"\'{}()\[\]\/\\\\]*$/u'],
             'status'      => ['sometimes', 'in:todo,done'],
         ]);
 
